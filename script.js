@@ -72,7 +72,7 @@ function updateStatus(){
   const shown = [];
   if(map.hasLayer(cityLayer)) shown.push(`${cities.length} cities`);
   if(map.hasLayer(weatherLayer)) shown.push(`${stations.length} stations`);
-  status.textContent = shown.length ? `Showing ${shown.join(" and ")}` : "All data layers are off";
+  status.innerHTML = shown.length ? `<span aria-hidden="true">●</span> Showing ${shown.join(" and ")}` : "All data layers are off";
 }
 map.on("overlayadd overlayremove", updateStatus);
 updateStatus();
@@ -87,8 +87,21 @@ function currentTheme(){return root.dataset.theme || (matchMedia("(prefers-color
 function updateThemeLabel(){themeButton.setAttribute("aria-label", `Switch to ${currentTheme() === "dark" ? "light" : "dark"} mode`);}
 themeButton.addEventListener("click", () => {
   const next = currentTheme() === "dark" ? "light" : "dark";
-  root.dataset.theme = next;
-  localStorage.setItem("pakistan-atlas-theme", next);
-  updateThemeLabel();
+  const applyTheme = () => {
+    root.dataset.theme = next;
+    localStorage.setItem("pakistan-atlas-theme", next);
+    updateThemeLabel();
+  };
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches && document.startViewTransition){
+    document.startViewTransition(applyTheme);
+  }else if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    root.classList.add("theme-fade-out");
+    window.setTimeout(() => {
+      applyTheme();
+      root.classList.remove("theme-fade-out");
+    }, 180);
+  }else{
+    applyTheme();
+  }
 });
 updateThemeLabel();
