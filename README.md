@@ -2,6 +2,10 @@
 
 An interactive Web GIS of Pakistan created for the Web GIS Application course.
 
+- **Assignment:** Lab Assignment 1 — Develop an Interactive Web GIS of Pakistan
+- **Student:** Muhammad Abdullah
+- **Live application:** https://pakistan-interactive-web-gis-lab-as.vercel.app
+
 ## Requirements covered
 
 - OpenStreetMap and satellite imagery basemaps
