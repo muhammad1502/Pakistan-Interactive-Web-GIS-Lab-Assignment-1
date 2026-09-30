@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive Web GIS of Pakistan showing major cities and weather stations.">
+  <meta name="author" content="Muhammad Abdullah">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>Pakistan Atlas | Web GIS Application</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230071e3'/%3E%3Cpath d='M19 45V19h10c9 0 16 4 16 13S38 45 29 45H19Zm8-7h3c4 0 7-2 7-6s-3-6-7-6h-3v12Z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynhZwMZ3MZpYdMZ9F7T/OtoM9B3s=" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#map">Skip to map</a>
+
+  <header class="globalnav" id="top">
+    <div class="globalnav-inner">
+      <a class="brand" href="#top" aria-label="Pakistan Atlas, back to top">
+        <span class="brand-mark" aria-hidden="true">PK</span>
+        <span>Pakistan Atlas</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#map-section">Map</a>
+        <a href="#explore">Explore</a>
+        <a href="#about">About</a>
+      </nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch colour theme">
+        <svg class="moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M20.7 14.6A8.5 8.5 0 0 1 9.4 3.3a.75.75 0 0 0-.98-.94A10 10 0 1 0 21.64 15.6a.75.75 0 0 0-.94-.98Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7"/></g></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="ribbon" aria-label="Assignment details">
+    <p><span>Web GIS Application</span><span aria-hidden="true">·</span><span>Lab Assignment 1</span><span aria-hidden="true">·</span><span>Pakistan</span></p>
+  </aside>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Interactive Web GIS</p>
+          <h1 id="hero-title">Pakistan,<br><span>mapped clearly.</span></h1>
+          <p class="hero-copy">Explore major cities and weather stations across Pakistan. Switch the view, inspect local attributes, and move from the coast to the mountains.</p>
+          <a class="button" href="#map-section">Open the map <span aria-hidden="true">↓</span></a>
+        </div>
+        <dl class="hero-stats" aria-label="Map summary">
+          <div><dt id="city-count">20</dt><dd>Cities</dd></div>
+          <div><dt id="station-count">20</dt><dd>Weather stations</dd></div>
+          <div><dt>2</dt><dd>Basemaps</dd></div>
+          <div><dt>4</dt><dd>Administrative areas</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="map-band" id="map-section" aria-labelledby="map-title">
+      <div class="wrap map-heading">
+        <div>
+          <p class="eyebrow">Live explorer</p>
+          <h2 id="map-title">The map</h2>
+        </div>
+        <p>Use the layer button to switch basemaps or turn datasets on and off. Select any symbol for details.</p>
+      </div>
+      <div class="map-shell">
+        <div id="map" role="application" aria-label="Interactive map of Pakistan with city and weather station layers"></div>
+        <div class="map-legend" aria-label="Map legend">
+          <p>Legend</p>
+          <div><span class="legend-city" aria-hidden="true"></span> Major city</div>
+          <div><span class="legend-weather" aria-hidden="true"></span> Weather station</div>
+        </div>
+        <div class="map-status" id="map-status" aria-live="polite">Showing all locations</div>
+      </div>
+    </section>
+
+    <section class="band" id="explore" aria-labelledby="explore-title">
+      <div class="wrap">
+        <p class="eyebrow">At a glance</p>
+        <h2 id="explore-title">A country of contrasts.</h2>
+        <div class="feature-grid">
+          <article class="feature feature-large">
+            <span class="feature-icon" aria-hidden="true">⌖</span>
+            <h3>From Karachi to Skardu</h3>
+            <p>The city layer spans Pakistan’s coastal megacity, provincial capitals, historic centres, and high-altitude settlements.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-icon weather-icon" aria-hidden="true">☀</span>
+            <h3>Weather context</h3>
+            <p>Compare representative temperature and rainfall readings from 20 stations.</p>
+          </article>
+          <article class="feature feature-dark">
+            <span class="feature-icon" aria-hidden="true">◐</span>
+            <h3>Two perspectives</h3>
+            <p>Move between OpenStreetMap detail and satellite imagery at any time.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band about" id="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <div><p class="eyebrow">About the project</p><h2 id="about-title">Built for exploration.</h2></div>
+        <p>This interactive atlas was created for Lab Assignment 1 in Web GIS Application. It brings two spatial datasets together in a responsive, accessible interface: major Pakistani cities and weather stations. Values are a static educational dataset prepared for demonstrating GIS interaction.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <p>Pakistan Atlas</p>
+      <p>Created by Muhammad Abdullah · BS Remote Sensing &amp; GIS</p>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <noscript><p class="noscript">JavaScript is required to display the interactive map.</p></noscript>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js"></script>
+</body>
+</html>
